@@ -3,7 +3,6 @@ import AgoraRTC, { IAgoraRTCClient, ILocalAudioTrack, ILocalVideoTrack, IRemoteA
 
 const APP_ID = 'b8a2706939fd468b958ad552a1aa3ff5';
 const TOKEN = '007eJxTYFgrPyFMe0qH5ZotJtkPrnP7/79813VrhJt8wbt/p4q2Vk1WYEiySDQyNzCzNLZMSzExs0iyNLVITDE1NUo0TEw0Tksz9Tu5J60hkJGh+tFbZkYGCATxWRhKUotLGBgAxK4iAQ==';
-const CHANNEL = 'test';
 
 const VideoCall: React.FC = () => {
   const [client] = useState<IAgoraRTCClient>(() => AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' }));
@@ -13,6 +12,7 @@ const VideoCall: React.FC = () => {
   const remoteVideoRef = useRef<HTMLDivElement | null>(null);
   const [isJoined, setIsJoined] = useState(false);
   const [remoteAudioTrack, setRemoteAudioTrack] = useState<IRemoteAudioTrack | null>(null);
+  const [change, setChange] = useState('test')
 
   useEffect(() => {
     client.on('user-published', async (user, mediaType) => {
@@ -37,13 +37,15 @@ const VideoCall: React.FC = () => {
 
   const handleJoin = async () => {
     try {
+      console.log('client', client)
       const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       const videoTrack = await AgoraRTC.createCameraVideoTrack();
+      console.log('videoTrack', videoTrack)
 
       setLocalAudioTrack(audioTrack);
       setLocalVideoTrack(videoTrack);
 
-      await client.join(APP_ID, CHANNEL, TOKEN || null);
+      await client.join(APP_ID, change, TOKEN || null);
 
       if (localVideoRef.current) {
         videoTrack.play(localVideoRef.current);
@@ -89,8 +91,13 @@ const VideoCall: React.FC = () => {
   return (
     <div>
       <h1>Agora Video Call</h1>
-      <div ref={localVideoRef} style={{ width: '320px', height: '240px', backgroundColor: '#000' }} />
-      <div ref={remoteVideoRef} style={{ width: '320px', height: '240px', backgroundColor: '#000' }} />
+      <div style={{position: 'relative',width: '420px', height: '500px',}}>
+      <div ref={localVideoRef} style={{ width: '420px', height: '500px', backgroundColor: '#000', position: 'absolute', zIndex: '0' }} />
+        <div ref={remoteVideoRef} style={{ width: '150px', height: '150px', backgroundColor: '#000', position: 'absolute', zIndex: '1',right:'0' }} />
+      
+      </div>
+     
+
       <div>
         {isJoined ? (
           <>
@@ -109,6 +116,7 @@ const VideoCall: React.FC = () => {
           <button onClick={handleJoin}>Join Call</button>
         )}
       </div>
+      <input type='text' onChange={(e) => setChange(e.target.value)} />
     </div>
   );
 };
