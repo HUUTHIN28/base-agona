@@ -91,11 +91,10 @@ const VideoCall: React.FC = () => {
   return (
     <div>
       <h1>Agora Video Call</h1>
-      <div style={{position: 'relative',width: '420px', height: '500px',}}>
-      <div ref={localVideoRef} style={{ width: '420px', height: '500px', backgroundColor: '#000', position: 'absolute', zIndex: '0' }} />
-        <div ref={remoteVideoRef} style={{ width: '150px', height: '150px', backgroundColor: '#000', position: 'absolute', zIndex: '1',right:'0' }} />
-      
-      </div>
+    
+      <div ref={localVideoRef} style={{ width: '420px', height: '500px', backgroundColor: '#000' }} />
+      <div ref={remoteVideoRef} style={{ width: '150px', height: '150px', backgroundColor: '#000'  }} />
+  
      
 
       <div>
