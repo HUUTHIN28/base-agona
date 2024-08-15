@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import AgoraRTC, { IAgoraRTCClient, ILocalAudioTrack, ILocalVideoTrack, IRemoteAudioTrack, IRemoteVideoTrack } from 'agora-rtc-sdk-ng';
 
 const APP_ID = 'b8a2706939fd468b958ad552a1aa3ff5';
-const TOKEN = '007eJxTYFgrPyFMe0qH5ZotJtkPrnP7/79813VrhJt8wbt/p4q2Vk1WYEiySDQyNzCzNLZMSzExs0iyNLVITDE1NUo0TEw0Tksz9Tu5J60hkJGh+tFbZkYGCATxWRhKUotLGBgAxK4iAQ==';
+const TOKEN = '007eJxTYNiuVfSQ3dbb/8lr1kU7uB5wJkuW6s89ZrPw9Wum4GM564IVGJIsEo3MDcwsjS3TUkzMLJIsTS0SU0xNjRINExON09JMVyvsS2sIZGRo4v3NwsgAgSA+C0NJanEJAwMAC0Ye5w==';
 
 const VideoCall: React.FC = () => {
   const [client] = useState<IAgoraRTCClient>(() => AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' }));
@@ -91,10 +91,11 @@ const VideoCall: React.FC = () => {
   return (
     <div>
       <h1>Agora Video Call</h1>
-    
-      <div ref={localVideoRef} style={{ width: '420px', height: '500px', backgroundColor: '#000' }} />
-      <div ref={remoteVideoRef} style={{ width: '150px', height: '150px', backgroundColor: '#000'  }} />
-  
+      <div style={{position: 'relative',width: '420px', height: '500px',}}>
+      <div ref={localVideoRef} style={{ width: '420px', height: '500px', backgroundColor: '#000', position: 'absolute', zIndex: '0' }} />
+        <div ref={remoteVideoRef} style={{ width: '150px', height: '150px', backgroundColor: '#000', position: 'absolute', zIndex: '1',right:'0' }} />
+      
+      </div>
      
 
       <div>
